@@ -19,11 +19,14 @@ module.exports={
     },
     output:{
         path:path.resolve(__dirname,'build'),
+        publicPath: '/',
         filename:'[name].js'
     },
     devServer:{
       contentBase:"build",
       stats:{colors:true}
+      //   ,
+      // publicPath: "/"
     },
     devtool:"eval-source-map",
     resolve:{
@@ -47,8 +50,17 @@ module.exports={
              test:/\.json$/,
              loader:'json'
             },{
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                loader: 'url?limit=5000&name=assets/images/[name].[ext]'
+            },{
               test:/\.(woff|woff2|ttf|svg|eot)(\?v=\d+\.\d+\.\d+)?$/,
-              loader:'url?limit=1000'
+              loader:'url?limit=1000&name=assets/font/[name].[ext]'
+            },{
+                test: /\.html$/,
+                loader: 'html',
+                query: {
+                    minimize: true
+                }
             }
         ],
         noParse:[reactPath,reactDomPath]

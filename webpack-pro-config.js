@@ -15,7 +15,7 @@ let reactDomPath=path.join(__dirname,'./node_modules/react-dom/dist/react-dom.js
 console.log("生产环境...");
 
 
-console.log(new webpack.optimize.UglifyJsPlugin);
+// console.log(new webpack.optimize.UglifyJsPlugin);
 
 module.exports={
     entry:{
@@ -24,12 +24,13 @@ module.exports={
     },
     output:{
         path:path.resolve(__dirname,'build'),
+        publicPath: '/',
         filename:'[name].js?[hash]'
     },
-    devServer:{
-      contentBase:"build",
-      stats:{colors:true}
-    },
+    // devServer:{
+    //   contentBase:"build",
+    //   stats:{colors:true}
+    // },
     resolve:{
        extensions:['','.js','.css','.jsx'] //,
        // alias:{
@@ -51,8 +52,17 @@ module.exports={
              test:/\.json$/,
              loader:'json'
             },{
+                test: /\.(png|jpe?g|gif)(\?.*)?$/,
+                loader: 'url-loader?limit=1&name=assets/images/[name][hash].[ext]'
+            },{
               test:/\.(woff|woff2|ttf|svg|eot)(\?v=\d+\.\d+\.\d+)?$/,
-              loader:'url?limit=1000'
+              loader:'url?limit=1000&name=assets/font/[name].[ext]'
+            },{
+                test: /\.html$/,
+                loader: 'html',
+                query: {
+                  minimize: true
+                }
             }
         ],
         noParse:[reactPath,reactDomPath]
@@ -84,7 +94,9 @@ module.exports={
             }
         }),
         //合并css
-        new ExtractTextPlugin("[name].css?[hash]"),
+        new ExtractTextPlugin("[name].css?[hash]",{
+            allChunks:true
+        }),
         new webpack.NoErrorsPlugin()
     ]
 }
