@@ -25,23 +25,16 @@ module.exports={
     devServer:{
       contentBase:"build",
       stats:{colors:true}
-      //   ,
-      // publicPath: "/"
     },
     devtool:"eval-source-map",
     resolve:{
        extensions:['','.js','.css','.jsx']
-       //  ,
-       // alias:{
-       //     'react':reactPath,
-       //     'react-dom':reactDomPath
-       // }
     },
     module:{
         loaders:[
             {
              test:/\.js$/,
-             loaders:['babel'], //'react-hot',
+             loaders:['babel'],
              exclude:path.resolve(__dirname,'node_modules')
             },{
              test:/\.css$/,

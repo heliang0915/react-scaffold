@@ -11,11 +11,7 @@ var CommonsChunkPlugin=webpack.optimize.CommonsChunkPlugin;
 
 let reactPath=path.join(__dirname,"./node_modules/react/dist/react.js");
 let reactDomPath=path.join(__dirname,'./node_modules/react-dom/dist/react-dom.js');
-
 console.log("生产环境...");
-
-
-// console.log(new webpack.optimize.UglifyJsPlugin);
 
 module.exports={
     entry:{
@@ -27,16 +23,8 @@ module.exports={
         publicPath: '/',
         filename:'[name].js?[hash]'
     },
-    // devServer:{
-    //   contentBase:"build",
-    //   stats:{colors:true}
-    // },
     resolve:{
-       extensions:['','.js','.css','.jsx'] //,
-       // alias:{
-       //     'react':reactPath,
-       //     'react-dom':reactDomPath
-       // }
+       extensions:['','.js','.css','.jsx']
     },
     module:{
         loaders:[
